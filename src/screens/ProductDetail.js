@@ -1,34 +1,35 @@
 import {StyleSheet, ScrollView, Text, Image, View} from 'react-native';
 import React from 'react';
 import AppHeader from '../components/AppHeader';
-import { ImageSlider } from 'react-native-image-slider-banner';
+import {ImageSlider} from 'react-native-image-slider-banner';
+import {colors} from '../util/color';
+import {constant} from '../util/constant';
 
 const ProductDetail = ({route, navigation}) => {
-  const item = route.params.data;
- 
-  const output = route.params.data.images.map(name => ({'img':name}));
-  console.log(">>> "+output);
+
+  const imgList = route.params.data.images.map(name => ({img: name}));
+
   return (
     <View style={styles.container}>
       <AppHeader
         leftIcon={require('../images/back.png')}
-        title={'Product Detail'}
+        title={constant.PRODUCT_DETAIL}
         onClickLeftIcon={() => {
           navigation.goBack();
         }}
-        isCart={true}
       />
       <ScrollView>
-       <ImageSlider
-          data={output}
+        <ImageSlider
+          data={imgList}
           autoPlay={false}
-          onItemChanged={item => console.log('item', item)}
-          closeIconColor="#fff"
+          closeIconColor={colors.white}
         />
         <Text style={styles.title}>{route.params.data.title}</Text>
         <Text style={styles.desc}>{route.params.data.description}</Text>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.price, {color: '#000'}]}>{'Price'}</Text>
+          <Text style={[styles.price, {color: colors.black}]}>
+            {constant.PRICE}
+          </Text>
           <Text style={styles.price}>{' $' + route.params.data.price}</Text>
         </View>
       </ScrollView>
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 23,
-    color: '#000',
+    color: colors.black,
     fontWeight: '600',
     marginLeft: 20,
     marginTop: 20,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   price: {
-    color: 'green',
+    color: colors.green,
     marginLeft: 20,
     marginTop: 20,
     fontSize: 20,

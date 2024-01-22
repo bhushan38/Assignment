@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import Home from './tabs/Home';
 import Account from './tabs/Account';
 import Search from './tabs/Search';
+import { colors } from '../util/color';
 
 const Main = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   return (
     <View style={styles.container}>
-      <View style={styles.screen}>
+      
         {selectedTab == 0 ? (
           <Home></Home>
         ) : selectedTab == 1 ? (
@@ -16,7 +17,7 @@ const Main = () => {
         ) : (
           <Account></Account>
         )}
-      </View>
+      
       <View style={styles.bottomView}>
         <TouchableOpacity
           style={styles.bottomTab}
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   bottomTab: {
     width: '20%',

@@ -8,16 +8,13 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-//import {useSelector} from 'react-redux';
+import { colors } from '../util/color';
 const { width} = Dimensions.get('window');
 
 const AppHeader = ({
   title,
   leftIcon,
-  rightIcon,
   onClickLeftIcon,
-  onClickRightIcon,
-  isCart,
 }) => {
   const navigation = useNavigation();
   return (
@@ -41,7 +38,7 @@ const styles = StyleSheet.create({
     width: width,
     height: 65,
 
-    backgroundColor: '#42159E',
+    backgroundColor: colors.headerColor,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -57,10 +54,10 @@ const styles = StyleSheet.create({
   icon: {
     width: 30,
     height: 30,
-    tintColor: '#fff',
+    tintColor: colors.white,
   },
   title: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 20,
     justifyContent: 'center',
     alignItems: 'center',

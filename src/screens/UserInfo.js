@@ -4,11 +4,11 @@ import AppHeader from '../components/AppHeader';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import AppButton from '../components/AppButton';
 import {useSelector} from 'react-redux';
+import {colors} from '../util/color';
+import { constant } from '../util/constant';
 
-const UserInfo = (props) => {
+const UserInfo = props => {
   const userDetail = useSelector(state => state.user);
-  console.log('user::: ' + JSON.stringify(userDetail));
-  console.log('user::: ' + userDetail.data.email);
 
   const clearStorage = async () => {
     try {
@@ -20,33 +20,33 @@ const UserInfo = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <AppHeader title={'User Profile'} isCart={true} />
+    <View>
+      <AppHeader title={constant.USER_PROFILE} />
       <View style={styles.imagecontainer}>
-        <Image style={styles.userImage} source={{uri: userDetail.data.image}}></Image>
+        <Image style={styles.userImage} source={{uri: userDetail.data.image}} />
       </View>
       <View style={styles.typeView}>
-        <Text style={styles.header}>{'Name'}</Text>
+        <Text style={styles.header}>{constant.NAME}</Text>
         <Text style={styles.value}>
           {userDetail.data.firstName} {userDetail.data.lastName}
         </Text>
       </View>
       <View style={styles.typeView}>
-        <Text style={styles.header}>{'Email'}</Text>
+        <Text style={styles.header}>{constant.EMAIL}</Text>
         <Text style={styles.value}>{userDetail.data.email}</Text>
       </View>
       <View style={styles.typeView}>
-        <Text style={styles.header}>{'Username'}</Text>
+        <Text style={styles.header}>{constant.USERNAME}</Text>
         <Text style={styles.value}>{userDetail.data.username}</Text>
       </View>
       <View style={styles.typeView}>
-        <Text style={styles.header}>{'Gender'}</Text>
+        <Text style={styles.header}>{constant.GENDER}</Text>
         <Text style={styles.value}>{userDetail.data.gender}</Text>
       </View>
       <AppButton
-        bg={'#E27800'}
-        title={'Logout'}
-        color={'#fff'}
+        bg={colors.buttonColor}
+        title={constant.LOGOUT}
+        color={colors.white}
         onClick={() => {
           clearStorage();
           props.callThis(false);
@@ -59,10 +59,7 @@ const UserInfo = (props) => {
 export default UserInfo;
 
 const styles = StyleSheet.create({
-  container: {
-    //flex: 1,
-    // flexDirection: 'column',
-  },
+  
   typeView: {
     width: '100%',
     flexDirection: 'row',
@@ -71,18 +68,18 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 23,
-    color: '#000',
+    color: colors.black,
     fontWeight: '600',
     marginLeft: 20,
     marginTop: 20,
   },
   value: {
     fontSize: 20,
-    color: '#000',
+    color: colors.black,
     marginLeft: 20,
     marginTop: 20,
   },
-  imagecontainer:{
+  imagecontainer: {
     width: '100%',
     flexDirection: 'row',
     marginTop: 5,

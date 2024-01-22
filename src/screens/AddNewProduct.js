@@ -1,18 +1,17 @@
 import {
-  Image,
   Platform,
   StyleSheet,
-  Text,
   TextInput,
   ToastAndroid,
   AlertIOS,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {API_URL} from '@env';
 import AppHeader from '../components/AppHeader';
 import AppButton from '../components/AppButton';
+import {colors} from '../util/color';
+import {constant} from '../util/constant';
 
 const AddNewProduct = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -32,52 +31,55 @@ const AddNewProduct = ({navigation}) => {
       .then(res => res.json())
       .then(res => {
         if (title == res.title) {
-          console.log('Success: ' + res.title);
-          if (Platform.OS === 'android') {
-            ToastAndroid.show("Product added successfully !!!", ToastAndroid.SHORT);
-          } else {
-            AlertIOS.alert("Product added successfully !!!");
-          }
+          showMessage(constant.PRODUCT_ADDED_SUCCESS_MSG);
           navigation.goBack();
         }
       })
       .catch(error => {
-        console.log('error:' + error);
+        showMessage(error);
       });
+  };
+
+  const showMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
   };
   return (
     <View style={styles.container}>
-        <AppHeader
+      <AppHeader
         leftIcon={require('../images/back.png')}
-        title={'Add New Product Detail'}
+        title={constant.ADD_NEW_PRODUCT_TITLE}
         onClickLeftIcon={() => {
           navigation.goBack();
         }}
         isCart={true}
       />
       <TextInput
-        placeholder="Title"
+        placeholder={constant.TITLE}
         style={[styles.input, {marginTop: 50}]}
         value={title}
         onChangeText={txt => setTitle(txt)}
       />
       <TextInput
-        placeholder="Description"
+        placeholder={constant.DESCRIPTION}
         style={[styles.input, {marginTop: 10}]}
         value={desc}
         onChangeText={txt => setDesc(txt)}
       />
       <TextInput
-        placeholder="Price"
+        placeholder={constant.PRICE}
         style={[styles.input, {marginTop: 10}]}
         value={price}
         keyboardType="numeric"
         onChangeText={txt => setPrice(txt)}
       />
       <AppButton
-        bg={'#FE9000'}
-        title={'Save Product'}
-        color="#fff"
+        bg={colors.buttonColor}
+        title={constant.SAVE_PRODUCT}
+        color={colors.white}
         onClick={() => {
           addNewProduct();
         }}
@@ -91,18 +93,7 @@ export default AddNewProduct;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  addButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#EC8A00',
-    borderRadius: 25,
-    position: 'absolute',
-    bottom: 50,
-    right: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.white,
   },
   input: {
     width: '90%',

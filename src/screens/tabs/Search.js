@@ -9,25 +9,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-// import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-//import {API_URL} from '@env';
 import AppHeader from '../../components/AppHeader';
 import {API_URL} from '@env';
+import {colors} from '../../util/color';
+import {constant} from '../../util/constant';
 
 const Search = () => {
-  //   const product = useSelector(state => state);
   const [search, setSearch] = useState('');
 
   const [searchedList, setSearchedList] = useState([]);
   const navigation = useNavigation();
 
-  //   const filterData = txt => {
-  //     let newData = oldData.filter(item => {
-  //       return item.title.toLowerCase().match(txt.toLowerCase());
-  //     });
-  //     setSearchedList(newData);
-  //   };
   const searchProduct = txt => {
     //set product to empty array if user click clear icon.
     if (txt == []) {
@@ -37,23 +30,22 @@ const Search = () => {
       fetch(API_URL + '/products/search?q=' + txt)
         .then(res => res.json())
         .then(json => {
-          console.log('--------P ' + json.products);
           setSearchedList(json.products);
         });
     }
   };
   return (
     <View style={styles.container}>
-      <AppHeader title={'Search Product'} />
+      <AppHeader title={constant.SEARCH_PRODUCT} />
       <View style={styles.searchView}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image
+          <Image
             source={require('../../images/search.png')}
             style={styles.icon}
           />
           <TextInput
             value={search}
-            placeholder={'Search product here...'}
+            placeholder={constant.SEARCH_PLACEHOLDER}
             onChangeText={txt => {
               setSearch(txt);
               searchProduct(txt);
@@ -88,7 +80,7 @@ const Search = () => {
                 activeOpacity={1}
                 style={styles.productItem}
                 onPress={() => {
-                  navigation.navigate('ProductDetail', {data: item});
+                  navigation.navigate(constant.SCREEN_PRODUCT_DETAIL, {data: item});
                 }}>
                 <Image
                   source={{uri: item.thumbnail}}
@@ -119,7 +111,7 @@ const Search = () => {
 export default Search;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   searchView: {
     width: '90%',
@@ -144,7 +136,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: 100,
     marginTop: 10,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -161,7 +153,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   price: {
-    color: 'green',
+    color: colors.green,
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 20,

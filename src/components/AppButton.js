@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 
 const AppButton = ({bg, title, onClick, color}) => {

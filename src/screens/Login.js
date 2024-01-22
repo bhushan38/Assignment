@@ -8,16 +8,16 @@ import {
   AlertIOS,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 import AppButton from '../components/AppButton';
 import {API_URL} from '@env';
 import {useDispatch} from 'react-redux';
 import {addUserDetails} from '../redux/slices/UserSlice';
+import {colors} from '../util/color';
+import {constant} from '../util/constant';
 
 const Login = props => {
-  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
   const dispatch = useDispatch();
@@ -26,72 +26,63 @@ const Login = props => {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        username: 'atuny0',
-        password: '9uQFF1Lh',
-        // expiresInMins: 60, // optional
+        username: username,
+        password: pass,
       }),
     })
       .then(res => res.json())
       .then(res => {
-        console.log('Login:' + res);
-        console.log('Login Stringify:' + JSON.stringify(res));
-        if (res.message != null && res.message === 'Invalid credentials') {
-          console.log('MEssage:::: ' + res.message);
-          //displayErrorMessage(res.message);
+        if (res.message != null && res.message === constant.INVALID_CRED) {
+          showMessage(constant.INVALID_CRED);
         } else {
-          console.log('Esle suss:::: ' + res);
-          props.callThis(true);
-          if (Platform.OS === 'android') {
-            ToastAndroid.show('Login successful !!!', ToastAndroid.SHORT);
-          } else {
-            AlertIOS.alert('Login successful !!!');
-          }
+          showMessage(constant.LOGIN_SUCCESS_MSG);
           storeUserSession(true);
           dispatch(addUserDetails(res));
+          props.callThis(true);
         }
       })
       .catch(error => {
-        if (Platform.OS === 'android') {
-          ToastAndroid.show('Login failed.', ToastAndroid.SHORT);
-        } else {
-          AlertIOS.alert('Login failed.');
-        }
+        showMessage(constant.LOGIN_FAILED);
         storeUserSession(false);
       });
   };
 
+  const showMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  };
+
   const storeUserSession = async status => {
     try {
-      await EncryptedStorage.setItem('IS_USER_LOGIN', JSON.stringify(status));
-
-      // Congrats! You've just stored your first value!
-    } catch (error) {
-      // There was an error on the native side
-    }
+      await EncryptedStorage.setItem(constant.IS_USER_LOGIN, JSON.stringify(status));
+    } catch (error) {}
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{'Login'}</Text>
+      <Text style={styles.title}>{constant.LOGIN}</Text>
 
       <TextInput
-        placeholder="Enter Username"
+        placeholder={constant.ENTER_USERNAME}
         style={styles.input}
         value={username}
         onChangeText={txt => setUsername(txt)}
       />
-
       <TextInput
-        placeholder="Enter password"
+        placeholder={constant.ENTER_PASSWORD}
         style={styles.input}
         value={pass}
+        secureTextEntry={true}
         onChangeText={txt => setPass(txt)}
       />
 
       <AppButton
-        bg={'#E27800'}
-        title={'Login'}
-        color={'#fff'}
+        bg={colors.buttonColor}
+        title={constant.LOGIN}
+        color={colors.white}
         onClick={() => {
           loginUser();
         }}
@@ -103,15 +94,14 @@ const Login = props => {
 export default Login;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   title: {
-    color: '#000',
+    color: colors.black,
     fontSize: 40,
-    marginLeft: 20,
     marginTop: 50,
     marginBottom: 50,
+    alignSelf: 'center',
   },
   input: {
     width: '90%',
