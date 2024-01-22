@@ -14,15 +14,18 @@ const Account = () => {
   //   const status = await AsyncStorage.getItem('IS_USER_LOGIN');
   //   return status;
   // };//
-
+  const changeLoginStatus = sts => {
+    console.log('changeLoginStatus::' + sts);
+    setLoginStatus(sts);
+  };
   const retrieveUserStatus = async () => {
     try {
       const status = await EncryptedStorage.getItem('IS_USER_LOGIN');
       if (status == null) {
-        console.log("null");
+        console.log('null');
         setLoginStatus(false);
       } else {
-        console.log("Status: "+status);
+        console.log('Status: ' + status);
         setLoginStatus(status);
       }
     } catch (error) {
@@ -32,8 +35,11 @@ const Account = () => {
   };
   return (
     <View>
-      
-      {loginStatus ? <UserInfo /> : <Login />}
+      {loginStatus ? (
+        <UserInfo callThis={changeLoginStatus} />
+      ) : (
+        <Login callThis={changeLoginStatus} />
+      )}
     </View>
   );
 };

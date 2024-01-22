@@ -13,32 +13,42 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 import AppButton from '../components/AppButton';
 import {API_URL} from '@env';
+import {useDispatch} from 'react-redux';
+import {addUserDetails} from '../redux/slices/UserSlice';
 
-
-const Login = () => {
+const Login = props => {
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
+  const dispatch = useDispatch();
   const loginUser = () => {
     fetch(API_URL + '/auth/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        username: username,
-        password: pass,
+        username: 'atuny0',
+        password: '9uQFF1Lh',
         // expiresInMins: 60, // optional
       }),
     })
       .then(res => res.json())
       .then(res => {
         console.log('Login:' + res);
-        if (Platform.OS === 'android') {
-          ToastAndroid.show('Login successful !!!', ToastAndroid.SHORT);
+        console.log('Login Stringify:' + JSON.stringify(res));
+        if (res.message != null && res.message === 'Invalid credentials') {
+          console.log('MEssage:::: ' + res.message);
+          //displayErrorMessage(res.message);
         } else {
-          AlertIOS.alert('Login successful !!!');
+          console.log('Esle suss:::: ' + res);
+          props.callThis(true);
+          if (Platform.OS === 'android') {
+            ToastAndroid.show('Login successful !!!', ToastAndroid.SHORT);
+          } else {
+            AlertIOS.alert('Login successful !!!');
+          }
+          storeUserSession(true);
+          dispatch(addUserDetails(res));
         }
-        storeUserSession(true);
-        // dispatch(addUserDetail(json));
       })
       .catch(error => {
         if (Platform.OS === 'android') {
@@ -59,7 +69,6 @@ const Login = () => {
       // There was an error on the native side
     }
   };
-
 
   return (
     <View style={styles.container}>

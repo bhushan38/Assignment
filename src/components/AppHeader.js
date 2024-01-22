@@ -30,7 +30,7 @@ const AppHeader = ({
         <Image style={styles.icon} source={leftIcon}></Image>
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
-      <View></View>
+      <View style={styles.btn}></View>
     </View>
   );
 };
