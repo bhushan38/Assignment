@@ -31,7 +31,10 @@ To run the app locally, follow these steps:
    ```
 3. Run the app
    ```sh
-   npm run android
+   Android: npm run android
+   
+   iOS : cd ios && pod install && cd ..
+   npm run ios
    ```
 
 ## Screenshots
