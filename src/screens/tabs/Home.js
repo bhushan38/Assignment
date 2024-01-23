@@ -40,7 +40,7 @@ const Home = () => {
   const getProduct = () => {
     if (productList.pageNumber > productList.lastLodedPageNumber) {
       //skip page number, limit page size to 10
-      fetch(API_URL + '/products?limit=8&skip=' + productList.pageNumber)
+      fetch(API_URL + '/products?limit=10&skip=' + productList.pageNumber)
         .then(res => res.json())
         .then(json => {
           // if (productList.data.length == 0) {
@@ -59,7 +59,7 @@ const Home = () => {
   };
   const fetchMore = () => {
     // setPageNumber(pageNumber + 10);
-    dispatch(setPagenumber(productList.pageNumber + 8));
+    dispatch(setPagenumber(productList.pageNumber + 10));
     // getProduct();
   };
 
