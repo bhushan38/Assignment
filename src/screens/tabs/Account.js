@@ -5,18 +5,24 @@ import Login from '../Login';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {constant} from '../../util/constant';
 import {useSelector} from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Account = () => {
   const userDetail = useSelector(state => state.user);
 
   const [loginStatus, setLoginStatus] = useState(false);
+
   useEffect(() => {
+    // get Login status
     retrieveUserStatus();
   }, [loginStatus]);
 
+  // This function gets called from Login & UserInfo screen and update this tab screen accordingly.
   const changeLoginStatus = sts => {
     setLoginStatus(sts);
   };
+
+  // Get initial login status
   const retrieveUserStatus = async () => {
     try {
       const status = await EncryptedStorage.getItem(constant.IS_USER_LOGIN);
@@ -27,18 +33,18 @@ const Account = () => {
         setLoginStatus(status);
       }
     } catch (error) {
-      // There was an error on the native side
       console.log(error);
     }
   };
   return (
-    <View>
+    <SafeAreaView>
+      {/* Depending on login status app will show respective screen */}
       {loginStatus ? (
         <UserInfo callThis={changeLoginStatus} />
       ) : (
         <Login callThis={changeLoginStatus} />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

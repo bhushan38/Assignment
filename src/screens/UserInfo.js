@@ -6,21 +6,20 @@ import AppButton from '../components/AppButton';
 import {useSelector} from 'react-redux';
 import {colors} from '../util/color';
 import {constant} from '../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const UserInfo = props => {
   const userDetail = useSelector(state => state.user);
 
+  // Clear local storage.
   const clearStorage = async () => {
     try {
       await EncryptedStorage.clear();
-      // Congrats! You've just cleared the device storage!
-    } catch (error) {
-      // There was an error on the native side
-    }
+    } catch (error) {}
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <AppHeader title={constant.USER_PROFILE} />
       <View style={styles.profileImage}>
         <Image style={styles.userImage} source={{uri: userDetail.data.image}} />
@@ -52,7 +51,7 @@ const UserInfo = props => {
           props.callThis(false);
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

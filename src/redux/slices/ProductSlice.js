@@ -1,5 +1,8 @@
 const {createSlice} = require('@reduxjs/toolkit');
 
+/* 
+This reducer is use for storing list of Products. 
+*/
 const ProductsSlice = createSlice({
   name: 'products',
   initialState: {

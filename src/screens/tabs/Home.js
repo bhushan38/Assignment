@@ -22,6 +22,7 @@ import {
 } from '../../redux/slices/ProductSlice';
 import {colors} from '../../util/color';
 import {constant} from '../../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -37,19 +38,26 @@ const Home = () => {
     if (!productList.loaded) getProduct();
   }, [productList.pageNumber]);
 
+  /* 
+   Get Products from server. only fetch 10 product at a time and 
+   when user scroll to bottom load next 10 set of data. 
+  */
+
   const getProduct = () => {
     if (productList.pageNumber > productList.lastLodedPageNumber) {
       //skip page number, limit page size to 10
       fetch(API_URL + '/products?limit=10&skip=' + productList.pageNumber)
         .then(res => res.json())
         .then(json => {
-          // if (productList.data.length == 0) {
-          //   dispatch(addProducts(json.products));
-          // } else {
           if (json.products.length == 0) {
+            /* when ther are no more data available on server set loading flag to true to 
+            avaid unnecessory server request. */
             dispatch(setLoaded(true));
           } else {
+            // store product list on redux store.
             dispatch(addProducts(json.products));
+            /*  update last loaded page number to avoid loading same set of data 
+             when user change tab in between. */
             dispatch(setLastPageLoaded(productList.pageNumber));
           }
           // }
@@ -57,12 +65,13 @@ const Home = () => {
         .catch(error => {});
     }
   };
+
+  // Load more data when user scroll to bottom of the screen.
   const fetchMore = () => {
-    // setPageNumber(pageNumber + 10);
     dispatch(setPagenumber(productList.pageNumber + 10));
-    // getProduct();
   };
 
+  // Get user login status
   const retrieveUserStatus = async () => {
     try {
       const status = await EncryptedStorage.getItem(constant.IS_USER_LOGIN);
@@ -77,7 +86,7 @@ const Home = () => {
     }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppHeader title={constant.Products} />
       {
         <FlatList
@@ -89,7 +98,9 @@ const Home = () => {
                 activeOpacity={1}
                 style={styles.productItem}
                 onPress={() => {
-                  navigation.navigate(constant.SCREEN_PRODUCT_DETAIL, {data: item});
+                  navigation.navigate(constant.SCREEN_PRODUCT_DETAIL, {
+                    data: item,
+                  });
                 }}>
                 <Image
                   source={{uri: item.thumbnail}}
@@ -124,7 +135,7 @@ const Home = () => {
           <Text style={{fontSize: 30, color: colors.white}}>+</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

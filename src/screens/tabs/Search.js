@@ -14,6 +14,7 @@ import AppHeader from '../../components/AppHeader';
 import {API_URL} from '@env';
 import {colors} from '../../util/color';
 import {constant} from '../../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Search = () => {
   const [search, setSearch] = useState('');
@@ -21,6 +22,7 @@ const Search = () => {
   const [searchedList, setSearchedList] = useState([]);
   const navigation = useNavigation();
 
+  // Search product from server according to the user typed text.
   const searchProduct = txt => {
     //set product to empty array if user click clear icon.
     if (txt == []) {
@@ -35,7 +37,7 @@ const Search = () => {
     }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppHeader title={constant.SEARCH_PRODUCT} />
       <View style={styles.searchView}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -60,6 +62,7 @@ const Search = () => {
               {justifyContent: 'center', alignItems: 'center'},
             ]}
             onPress={() => {
+              // Clear text area and empty searched product list.
               setSearch('');
               searchProduct('');
             }}>
@@ -109,7 +112,7 @@ const Search = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

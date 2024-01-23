@@ -4,13 +4,14 @@ import AppHeader from '../components/AppHeader';
 import {ImageSlider} from 'react-native-image-slider-banner';
 import {colors} from '../util/color';
 import {constant} from '../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProductDetail = ({route, navigation}) => {
-
+  // convert list of images into format required for ImageSlider
   const imgList = route.params.data.images.map(name => ({img: name}));
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppHeader
         leftIcon={require('../images/back.png')}
         title={constant.PRODUCT_DETAIL}
@@ -33,7 +34,7 @@ const ProductDetail = ({route, navigation}) => {
           <Text style={styles.price}>{' $' + route.params.data.price}</Text>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

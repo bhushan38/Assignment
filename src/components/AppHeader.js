@@ -8,14 +8,14 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import { colors } from '../util/color';
-const { width} = Dimensions.get('window');
+import {colors} from '../util/color';
+const {width} = Dimensions.get('window');
 
-const AppHeader = ({
-  title,
-  leftIcon,
-  onClickLeftIcon,
-}) => {
+/*
+ * This reusable component is used to create custom header in the app,
+ * We can add back arrow button and click function from calling components.
+ */
+const AppHeader = ({title, leftIcon, onClickLeftIcon}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>

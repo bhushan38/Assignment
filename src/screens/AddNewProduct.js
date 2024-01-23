@@ -12,11 +12,14 @@ import AppHeader from '../components/AppHeader';
 import AppButton from '../components/AppButton';
 import {colors} from '../util/color';
 import {constant} from '../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AddNewProduct = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [desc, setDesc] = useState('');
+
+  // this methos use to store new product details on the backend server 
   const addNewProduct = () => {
     fetch(API_URL + '/products/add', {
       method: 'POST',
@@ -25,7 +28,6 @@ const AddNewProduct = ({navigation}) => {
         title: title,
         price: price,
         desc: desc,
-        /* other product data */
       }),
     })
       .then(res => res.json())
@@ -40,6 +42,7 @@ const AddNewProduct = ({navigation}) => {
       });
   };
 
+  // Show short toast message to the user.
   const showMessage = msg => {
     if (Platform.OS === 'android') {
       ToastAndroid.show(msg, ToastAndroid.SHORT);
@@ -48,7 +51,7 @@ const AddNewProduct = ({navigation}) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppHeader
         leftIcon={require('../images/back.png')}
         title={constant.ADD_NEW_PRODUCT_TITLE}
@@ -84,7 +87,7 @@ const AddNewProduct = ({navigation}) => {
           addNewProduct();
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

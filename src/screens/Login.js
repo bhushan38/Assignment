@@ -16,11 +16,15 @@ import {useDispatch} from 'react-redux';
 import {addUserDetails} from '../redux/slices/UserSlice';
 import {colors} from '../util/color';
 import {constant} from '../util/constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = props => {
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
   const dispatch = useDispatch();
+  
+ /*  Login user credential with server and 
+  display message to the user. */
   const loginUser = () => {
     fetch(API_URL + '/auth/login', {
       method: 'POST',
@@ -37,6 +41,7 @@ const Login = props => {
         } else {
           showMessage(constant.LOGIN_SUCCESS_MSG);
           storeUserSession(true);
+          // Store user detail on global store
           dispatch(addUserDetails(res));
           props.callThis(true);
         }
@@ -47,6 +52,7 @@ const Login = props => {
       });
   };
 
+  /* Show toast message to the user */
   const showMessage = msg => {
     if (Platform.OS === 'android') {
       ToastAndroid.show(msg, ToastAndroid.SHORT);
@@ -55,6 +61,7 @@ const Login = props => {
     }
   };
 
+  /* Store login status in local storage */
   const storeUserSession = async status => {
     try {
       await EncryptedStorage.setItem(constant.IS_USER_LOGIN, JSON.stringify(status));
@@ -62,7 +69,7 @@ const Login = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{constant.LOGIN}</Text>
 
       <TextInput
@@ -87,7 +94,7 @@ const Login = props => {
           loginUser();
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

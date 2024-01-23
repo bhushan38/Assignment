@@ -4,12 +4,14 @@ import Home from './tabs/Home';
 import Account from './tabs/Account';
 import Search from './tabs/Search';
 import { colors } from '../util/color';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Main = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       
+      {/* Based on user tab selection show respective screen */}
         {selectedTab == 0 ? (
           <Home></Home>
         ) : selectedTab == 1 ? (
@@ -62,7 +64,7 @@ const Main = () => {
           />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
