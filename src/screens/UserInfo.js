@@ -1,11 +1,11 @@
 import {StyleSheet, Text, Image, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppHeader from '../components/AppHeader';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import AppButton from '../components/AppButton';
 import {useSelector} from 'react-redux';
 import {colors} from '../util/color';
-import { constant } from '../util/constant';
+import {constant} from '../util/constant';
 
 const UserInfo = props => {
   const userDetail = useSelector(state => state.user);
@@ -22,7 +22,7 @@ const UserInfo = props => {
   return (
     <View>
       <AppHeader title={constant.USER_PROFILE} />
-      <View style={styles.imagecontainer}>
+      <View style={styles.profileImage}>
         <Image style={styles.userImage} source={{uri: userDetail.data.image}} />
       </View>
       <View style={styles.typeView}>
@@ -59,7 +59,6 @@ const UserInfo = props => {
 export default UserInfo;
 
 const styles = StyleSheet.create({
-  
   typeView: {
     width: '100%',
     flexDirection: 'row',
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
   },
-  imagecontainer: {
+  profileImage: {
     width: '100%',
     flexDirection: 'row',
     marginTop: 5,
@@ -92,5 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: colors.lightGrey,
   },
 });

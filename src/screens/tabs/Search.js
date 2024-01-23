@@ -71,16 +71,21 @@ const Search = () => {
         )}
       </View>
 
-      <View style={{marginTop: 50}}>
+      <View style={{marginTop: 10, padding: 10}}>
         <FlatList
           data={searchedList}
+          ListEmptyComponent={
+            <Text style={styles.emptyView}>{constant.NO_DATA_FOUND}</Text>
+          }
           renderItem={({item, index}) => {
             return (
               <TouchableOpacity
                 activeOpacity={1}
                 style={styles.productItem}
                 onPress={() => {
-                  navigation.navigate(constant.SCREEN_PRODUCT_DETAIL, {data: item});
+                  navigation.navigate(constant.SCREEN_PRODUCT_DETAIL, {
+                    data: item,
+                  });
                 }}>
                 <Image
                   source={{uri: item.thumbnail}}
@@ -111,6 +116,7 @@ const Search = () => {
 export default Search;
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: colors.white,
   },
   searchView: {
@@ -139,10 +145,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     flexDirection: 'row',
+    borderBottomWidth: 0.7,
+    borderBottomColor: colors.lightGrey,
+    borderRadius: 10,
+  },
+  emptyView: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   itemImage: {
     width: 100,
     height: 100,
+
+    borderRadius: 10,
   },
   name: {
     fontSize: 18,

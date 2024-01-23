@@ -22,4 +22,7 @@ export const constant = {
   LOGIN_SUCCESS_MSG:'Login successful !!!',
   LOGIN_FAILED: 'Login failed.',
   INVALID_CRED:'Invalid credentials',
+  NO_DATA_FOUND:'No Product Found. ',
+  SCREEN_PRODUCT_DETAIL:'AddNewProduct',
+  SCREEN_ADD_NEW_PRODUCT:'AddNewProduct',
 };

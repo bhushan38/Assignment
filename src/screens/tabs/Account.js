@@ -3,9 +3,12 @@ import React, {useEffect, useState} from 'react';
 import UserInfo from '../UserInfo';
 import Login from '../Login';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { constant } from '../../util/constant';
+import {constant} from '../../util/constant';
+import {useSelector} from 'react-redux';
 
 const Account = () => {
+  const userDetail = useSelector(state => state.user);
+
   const [loginStatus, setLoginStatus] = useState(false);
   useEffect(() => {
     retrieveUserStatus();
@@ -17,7 +20,8 @@ const Account = () => {
   const retrieveUserStatus = async () => {
     try {
       const status = await EncryptedStorage.getItem(constant.IS_USER_LOGIN);
-      if (status == null) {
+
+      if (status == null || userDetail.data == null) {
         setLoginStatus(false);
       } else {
         setLoginStatus(status);
