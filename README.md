@@ -3,11 +3,11 @@ This is a sample application that allows users to search for different products,
 
 
 ## Feature:
-SearchProduct: Users can search different products from the search page.
-Home Screen: The home screen displays the first 10 products,  when the user scrolls to the bottom app loads the next set of products from the server.
-Add Product: Only valid logged-in users can add a product.
-User Profile: Shows user profile details with the Logout option. Data is stored on a global store using redux.
-Login: The user can log in to the app using credentials from https://dummyjson.com/users.
+1. SearchProduct: Users can search different products from the search page.
+2. Home Screen: The home screen displays the first 10 products,  when the user scrolls to the bottom app loads the next set of products from the server.
+3. Add Product: Only valid logged-in users can add a product.
+4. User Profile: Shows user profile details with the Logout option. Data is stored on a global store using redux.
+5. Login: The user can log in to the app using credentials from https://dummyjson.com/users.
 
 <br />
 
