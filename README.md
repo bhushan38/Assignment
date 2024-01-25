@@ -53,6 +53,5 @@ To run the app locally, follow these steps:
  - [Free icons.](https://www.flaticon.com/)
  - [Dummy API for product and user details.](https://dummyjson.com/)
  - [For environment configuration.](https://github.com/goatandsheep/react-native-dotenv)
- - [For environment configuration.](https://github.com/goatandsheep/react-native-dotenv)
  - [Storing local data securely in encrypted format.](https://github.com/emeraldsanto/react-native-encrypted-storage#readme)
 
